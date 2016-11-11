@@ -1,0 +1,289 @@
+Tela de login facebook https://www.facebook.com/login.php?login_attempt=1&lwv=110
+
+Apresenta os campos “Email ou telefone” e “Senha”
+Apresenta o botão “Entrar”
+Apresenta a opção “Esqueceu a conta?”
+
+Se o usuário selecionar a opção “Esqueceu a conta?” ele deve ver a tela “Encotre sua conta” - ok
+
+Os campos “Email ou telefone” e “Senha” são de preenchimento obrigatório e precisam tersido previamente cadastrados na base de dados. - ok
+
+Os limites dos campos são:
+Email ou telefone: 255 char
+Senha: 80 char (usar valores limites na execução do teste)
+
+Os campos “Email ou telefone” e “Senha” devem apresentar um placeholder, que deve sumir quando o usuário insere um caracter no campo. - ok
+
+O email será considerado válido se estiver no formato x@x.x - ok
+
+O teclado deve apresentar o botão “Next” quando o cursor estiver no campo “Email ou telefone”, e “Done” quando estiver no campo “Senha”. - ok
+
+O botão “Done” quando clicado fecha o teclado e mantém o usuário na tela de login - ok
+
+A tentativa de login só é efetuada se o usuário clicar no botão “Entrar” - ok
+
+Se o usuário deixar ao menos um dos campos em branco e tentar logar, o sistema deve apresentar a mensagem “Insira um Email ou telefone e Senha válidos.” - ok
+
+Se o usuário tentar logar com um usuário não cadastrado na base de dados ou com uma senha/user inválidos, o sistema deve apresentar a mensagem “Dados inválidos.” - ok
+
+Os campos “Email ou telefone” e “Senha” devem apresentar um “x” no canto direito do campo quando o campo possui ao menos um caracter. Quando clicado, o “x” apaga o conteúdo escrito no campo e desaparece. - ok
+
+   Scenario: Some determinable business situation
+     Given some precondition
+       And some other precondition
+     When some action by the actor
+       And some other action
+       And yet another action
+     Then some testable outcome is achieved
+       And something else we can check happens too
+
+
+
+
+
+
+
+
+Check if layout matches the designed one
+
+Check if screen rotation keeps all fields visible
+
+Check if fillable fields present a placeholder value
+
+
+Scenario: User tries to login with valid credentials
+    Given I am on the "Login" screen
+		  And the user is registered
+    When I fill all fields with valid values
+      And I tap on "confirm" button
+    Then I should log in successfully
+
+
+Scenario Outline: User tries to login with invalid Email value
+	Given I am on the "Login" screen
+	When I fill the "email or phone" field with "<invalid_email_format>"
+		And I fill "password" field with valid value
+    And I tap on "Login" button
+	Then I should see the "invalid email/password error" message
+  Examples:
+		| invalid_email_format |
+		| x                    |
+		| x.x                  |
+		| x@x                  |
+		| @x.x                 |
+		| @x                   |
+		| x@                   |
+
+
+Scenario Outline: User tries to login with case sensitive values
+  Given I am on the "Login" screen
+  When I fill "email or phone" field with "<value1>"
+    And I fill "password" field with "<value2>"
+    And I tap on "Login" button
+  Then I should see "Invalid email/password error" message
+  Examples:
+	  | value1        | value2  |
+    | Test@test.com | test123 |
+    | test@test.com | Test123 |
+
+
+Scenario: User tries to login with wrong password
+  Given I am on the "Login" screen
+  When I fill "email or phone" field with valid values
+    And I fill password field with wrong password
+    And I tap on "Login" button
+  Then I should see "Invalid email/password error" message
+
+
+Scenario: User tries to login with wrong password three times in a row
+  Given I tried to login 2 times in a row
+  When I try to login with a valid "email or phone" for the third time
+	   But I use an invalid password
+     And I tap on "Login" button
+  Then I should see "Account locked" message
+
+
+Scenario: User tries to login after seeing the Account locked message
+  Given I have seen the "account locked" message
+  When I try to login
+  Then I should see the "recover your account" screen
+
+Scenario: User is not registered in the database
+  Given I am on the "login" screen
+    But I am not registered
+  When I try to login
+  Then I should see the "Invalid email/password error" message
+
+Scenario Outline: Trying to log in given one of the fields is empty
+  Given I am on the "Login" screen
+    And I filled the field <field1> with a valid value
+  When I leave the field <field2> empty
+    And I tap on "Login" button
+ Then I should see "Insira um Email ou telefone e Senha válidos." message
+ Examples:
+    | field1         | field2         |
+    | email or phone | password       |
+    | password       | email or phone |
+
+
+#Scenario Outline: User tries to login with password only
+    Given I am on the "Login" screen
+		And the user is registered
+    When I fill password field with a valid password
+        But leave the "email or phone" field empty
+    Then I should see "fill all required fields" message
+	And I should not be able to click the "log in" button
+
+
+#Scenario Outline: Log in button should only be clickable with email and password fields filled
+    Given I am on the "Login" screen
+    When I fill "email or phone" field with valid values
+        And I leave the password field empty
+    Then I should not be able to click the "Log In" button
+
+
+#Scenario Outline: Log in button should only be clickable with email and password fields filled
+    Given I am on the "Login" screen
+    When I fill password field with valid values
+        And I leave the "email or phone" field empty
+    Then I should not be able to click the "Log In" button
+
+
+#Scenario Outline: User should not be able to login with email and password fields empty
+	Given I am on the "Login" screen
+		And the "email or phone" field is empty
+		And the "password" field is empty
+	When I click the "log in" button
+
+
+Scenario: User tries to login without network connection
+  Given I am on the "Login" screen
+  When I fill all fields with valid values
+    And I tap on "confirm" button
+	  But I have no network connection
+  Then I should see the "network error" message
+
+
+Scenario: User should not be able to see the password while typing it
+    Given I am on the "Login" screen
+    When I fill password field with any value
+    Then I should see only "*" on the field
+
+
+Scenario: User should not be able to copy and paste values from Password field
+	Given I am on the "Login" screen
+		And the "password" field is filled
+	When I try to copy the values on the field
+	Then I should not be able to do it
+
+
+Scenario: Show password button on password field
+    Given I am on the "Login" screen
+		And I fill password field with any values
+    	And I can see only "*" on the field
+    When I tap the "show" button
+	Then I should see the text on password field
+
+
+Scenario: User should be able to clear the field using "x" button
+  Given I am on the "Login" screen
+	 And a fillable field have any value on it
+  When I tap the "x" at the end of the field
+  Then the field should be cleared of any values
+
+
+Scenario Outline: Keyboard should open when user taps on fillable field
+  Given I am on the "Login" screen
+  When I tap the <fillable_field>
+  Then I should see the "alpha keyboard" on the bottom of the screen
+  Examples:
+		| fillable field |
+		| email or phone |
+		| password       |
+
+@ios
+Scenario: Checking when I tap outside of the fields
+  Given the cursor is on any fillable fields
+    And I can see the keyboard on the bottom of the screen
+  When I tap outside the field
+  Then I should no longer see the keyboard
+
+#Scenario Outline: User should use the password keyboard to type password
+    Given I am on the "Login" screen
+    When I tap the password field
+    Then I should see the "password keyboard"
+
+
+@android
+Scenario: Using keyboard to move through fields
+  Given I am on the "email or phone" field
+  When I tap enter on keyboard
+  Then I should see the cursor on the "password" field
+
+
+Scenario: Done button should not login
+  Given I am on the "password" field
+  When I tap "Done" on the keyboard
+  Then the keyboard should close
+	   And I should keep seeing the "login" screen
+
+
+@android
+Scenario: checking the most languages section
+
+
+@android
+Scenario Outline: User should be able to quickly select most used languages
+  Given I am on the "Login" screen
+  When I tap the <quick_language>
+  Then I should see the screen changing the language to <quick_language>
+  Examples:
+		| quick language |
+		| Português      |
+	  | Español        |
+		| English        |
+
+
+@android
+Scenario Outline: Checking the most used languages section when I select one language
+
+
+Scenario: Testing the language selection
+  Given I am on the "Login" screen
+  When I tap the "more..." text
+  Then I should see the "language selection" modal
+
+
+Scenario Outline: Testing the language selection
+  Given I am on the "language selection" modal
+  When I tap <language>
+  Then the "language selection" modal should close
+    And I should see the "Login" screen in <language>
+  Examples:
+		| language  |
+		| Italiano  |
+		| Deutsch   |
+		| Afrikaans |
+
+
+Scenario: Tapping outside of the modal trying to dismiss it
+  Given I am on the "language selection" modal
+  When I tap outside of the modal trying to dismiss it
+  Then nothing should happen
+
+
+Scenario Outline: Testing the "Forgot Password" button
+  Given I am on the "Login" screen
+  When I tap the "Forgot Password" button
+  Then I should see the "Find your account" screen
+
+
+Scenario Outline: Testing the "Create your account" button
+  Given I am on the "Login" screen
+  When I tap the "Create your account" button
+  Then I should see the "Create Account" screen
+
+
+Scenario: Verifying Design
+  Given I am seeing the "Login" screen
+  Then I should see the screen with the same design of the prototype

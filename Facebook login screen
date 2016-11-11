@@ -240,7 +240,7 @@ Scenario Outline: User should be able to quickly select most used languages
   Examples:
 		| quick language |
 		| Português      |
-	  | Español        |
+	        | Español        |
 		| English        |
 
 

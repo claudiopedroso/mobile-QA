@@ -1,7 +1,94 @@
-Sign in facebook
-nome e sobrenome max 256 caracteres
-email/celular max 256 car
-email formato x@x.x 
-telefone formato 555 555 5555 somente números
-senha mx 80 car
-todos os campos sao obligatorios
+#Sign in facebook
+#nome e sobrenome max 256 caracteres
+#email/celular max 256 car
+#email formato x@x.x
+#telefone formato 555 555 5555 somente números
+#senha mx 80 car
+#todos os campos sao obligatorios
+
+Scenario: Verifying Design
+  Given I am seeing the "Login" screen
+  Then I should see the screen with the same design of the zeplin prototype"
+
+Scenario: Checking if all fields show their placeholder text
+  Given the fillable field don't hold any value
+  Then I should see a placeholder value
+
+Scenario: Entering valid email address
+  Given I am on "email address" screen
+  When I fill email field with a valid email address
+    And I tap "continue"
+  Then I should see the "what's your name" screen
+
+Scenario Outline: Entering an invalid email format
+  Given I am on "email address" screen
+  When I fill "email" field with "<invalid_email_format>"
+  Then I should see "invalid email" message
+  Examples:
+    | invalid_email_format |
+    | x@x                  |
+    | X@.x                 |
+    | @x.x                 |
+
+Scenario Outline: Keyboard should open when user taps on fillable field
+  Given I am on the "Login" screen
+  When I tap the <fillable_field>
+  Then I should see the "alpha keyboard" on the bottom of the screen
+  Examples:
+		| fillable field |
+		| email or phone |
+		| password       |
+
+Scenario: Dismissing keyboard when I tap outside the Field
+  Given the cursor is on the fillable field
+    And I can see the keyboard
+  When I tap outside a fillable field
+  Then the keyboard should be dismissed
+
+Scenario: Screen orientation should be fixed
+  Given I am on "what's your email" screen
+  When I switch device orientation
+  Then the screen orientation should remain the same it was
+
+Scenario: Switching registration from email to phone number
+  Given I am on the "what's your email" screen
+  When I tap the "use phone number" button
+  Then I should see the "what's your phone number" screen
+
+Scenario: Entering a valid phone number
+  Given I am on the "what's your phone number" screen
+  When I fill the "phone number" field with "<phone_number>"
+    And I tap continue
+  Then I should see the "what's your name" screen
+
+Scenario: Testing the country code modal
+  Given I am on the "what's your phone number" screen
+  When I tap the "country code" button
+  Then I should see the "select your country" modal
+
+Scenario Outline: Selecting a country should present it's phone code
+  Given I am on the "select your country" modal
+  When I tap on a "<country>"
+  Then I should see the "what's your phone number" screen
+    And I should see the "<country_phone_code>" on "what's your phone" fields
+  Examples:
+    | country       | country_phone_code |
+    | England       | +44                |
+    | United States | +1                 |
+    | France        | +33                |
+
+Scenario Outline: Swiping left to go back a screen
+  Given I am on "<screen1>"
+  When I swipe left
+  Then I should see "<screen2>"
+  Examples:
+    | screen1          | screen2 |
+    | What's your name | email   |
+
+  Scenario: User should be able to clear the field using "x" button
+    Given I have any value on a fillable field
+    When I tap the "x" at the end of the field
+    Then the field should be cleared of any values
+
+#30 minute mark
+

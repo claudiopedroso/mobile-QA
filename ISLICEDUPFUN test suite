@@ -1,0 +1,101 @@
+# http://www.kohl.ca/articles/ISLICEDUPFUN.pdf
+
+# I: INPUTS INTO THE DEVICE
+# These represent the ways you can interact and control the device. Including:
+#  Built-in keyboard/keypad
+#  Touch screen gestures and typing
+#  Synching with other devices
+#  Peripherals that you can plug in to the device
+#  Hold the device differently when inputting – be creative!
+
+# S: STORE
+# See if you can find anything that might have been missed by looking for:
+#  Submission specifications
+#  Development guide
+#  User guide for error handling, location services, permissions for user privacy items, accessibility, etc.
+
+# L: LOCATION
+# Where you are located can have an impact on what you are testing, particularly if the application requires an internet connection. 
+# Applications may be affected by the following:
+#  Geo-location errors
+#  Movement, stopping suddenly
+#  Connection issues due to interference
+#  Moving from one data network to another (eg. wifi to wifi, wifi to wireless broadband, wireless broadband to wifi, others)
+
+# I: INTERACTIONS/INTERRUPTIONS
+# Are there problems when:
+#  Running multiple applications, utilizing multitasking
+#  Using other applications, then using the application you are testing(email, calendar, texting, note taking, others)
+#  Notifications appear (new emails, phone calls, text messages, other notifications)
+#  Error messages occur (losing connections, notifications, operating system and other errors)
+
+# C: COMMUNICATION
+# Smartphones started out primarily as communication devices, but the app we are testing may not handle
+# communication interaction smoothly. Here are some communication examples:
+#  Phone
+#  Texting
+#  Emails
+#  Instant messaging
+#  Voicemail messages
+#  Video
+#  Others
+
+# E: ERGONOMICS
+# They run into the same problems that can make you tired:
+#  Small screens can be hard on the eyes
+#  A small device means there is no ergonomic help from a desk, or chair – you often hunch
+# over to interact with it
+#  It’s not uncommon to get a sore back, fingers, eyes when using a device for any length of time
+#  Use physical strain as points of investigation for usability problems
+
+# D: DATA
+# Check for:
+#  Types of input – special characters, different languages, etc
+#  Media – see if the app depends on an outside source to play music, videos or anything else.
+#  Size of files – if the application uses outside files, try using different file types
+#  Frequency of updates – some applications require data from a server that is updated
+# periodically to change settings, or to provide new content. Find out the schedule of these
+# updates and see how the application reacts when an update occurs.
+
+# U: USABILITY
+# When you are testing the application, note and log any issues that make
+# you uncomfortable, frustrated, angry, or upset. To find usability issues, look for any actions that are
+# awkward, confusing, or slow. Listen to your emotions – that’s an important source of usability issues.
+# Instructions can be incomplete or misleading, items can be labeled incorrectly, and there may be
+# workflows that make doing what you want to do difficult.
+
+# P: PLATFORM
+# You have little control over operating system updates. The provider encourages you to update
+# these, for good reasons. However, new versions can cause an app to fail that worked in a prior version. Be
+# aware that updates (even small ones) can cause an application to stop working. Be sure to find out all the
+# technical information about what device you are using, and what operating system version you have
+# installed when logging a bug.
+
+# F: FUNCTION
+# This can often be very simplistic: looking for items and ensuring they are there and function
+# the way they are supposed to. To be more creative, generate test ideas by asking these questions:
+#  Can you identify everything that the application does?
+#  Have you worked through all the aspects of the app? Clicked every button? Filled in every
+# form? Have looked into default settings and options that are available to you?.
+#  Try a tour of the product to identify everything it does.
+# Try to find commonly used features, and the most obscure. Be thorough.
+#  Once you have a good sense of what the product is supposed to do, does it match what
+# the app developers say it does? If it doesn’t, there is a source of problems. If your
+# impression differs from theirs, they need to know that.
+
+# U: USER SCENARIOS
+# I try to think of real people and how they would react to using the
+# software. To create scenarios, I identify the following
+#  How is this application supposed to be used?
+#  What problems does it solve for users?
+#  What are the goals of end users that this application helps them solve?
+
+# N: NETWORK
+# In thesecases, the application may fail or crash because of timing issues (it takes too long to get responses) poor 
+# connections (lack of signal strength) or moving from one network to another.
+#  Wifi
+#  Wireless broadband
+#  Dead spots
+#  Moving from one data network to another (eg. wifi to wifi, wifi to wireless broadband,
+# wireless broadband to wifi, others)
+

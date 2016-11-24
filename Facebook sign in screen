@@ -77,7 +77,7 @@ Scenario Outline: Selecting a country should present it's phone code
     | United States | +1                 |
     | France        | +33                |
 
-Scenario Outline: Swiping left to go back a screen
+Scenario Outline: Swipping from left to right to go back a screen
   Given I am on "<screen1>"
   When I swipe left
   Then I should see "<screen2>"
@@ -85,10 +85,41 @@ Scenario Outline: Swiping left to go back a screen
     | screen1          | screen2 |
     | What's your name | email   |
 
-  Scenario: User should be able to clear the field using "x" button
+Scenario: User should be able to clear the field using "x" button
     Given I have any value on a fillable field
     When I tap the "x" at the end of the field
     Then the field should be cleared of any values
 
 #30 minute mark
+
+Scenario Outline: Help text appears when user leaves a Name/last Field empty
+	Given I am on the Sign Up screen
+	When I tap on "<name_field>"
+		But I leave it empty
+		And tap outside the field
+	Then I should see the "What's your name" message
+	Examples
+		| name_field |
+		| First Name |
+		| Last Name  |
+
+Name and last name valid values
+mobile or email should be accepted
+login info should be equal in both fields
+valid mobile number and valid email in login check fields
+password field should accept only valid characters
+month, day and year values
+day values should only show existing days in chosen month
+not choosing a month/day/year value
+empty fields not allowed
+terms, data policy and cookie use modals
+providing your birthday modal
+sign up with invalid values on fields should alert user
+sign up with empty fields should alert user
+male or female (not both)
+special characters
+case sentivity
+password boundary values
+trying to register with existing values
+all fields boundary values
 
